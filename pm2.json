@@ -1,0 +1,15 @@
+{
+  "apps": [{
+    "name": "bankjob",
+    "script": "production.js",
+    "cwd": "D:\git\bankjob",
+    "exec_mode": "fork",
+    "max_memory_restart": "1G",
+    "autorestart": true,
+    "node_args": [],
+    "args": [],
+    "env": {
+      
+    }
+  }]
+}
