@@ -116,12 +116,12 @@ module.exports = class extends Base {
     const queryValue = this.post('queryValue');
     // 查询条件的封装
     const map = {};
+    // 或查询
+    map['_logic'] = 'or';
     // 企业名称
     map['companyName'] = ['LIKE', '%' + queryValue + '%'];
     // 负责人名称
     map['directorName'] = ['LIKE', '%' + queryValue + '%'];
-    // 或查询
-    map['_logic'] = 'or';
 
     try {
       const companies = this.mongo('companies');

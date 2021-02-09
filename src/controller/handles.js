@@ -12,11 +12,7 @@ module.exports = class extends Base {
   async getHandlesByParamsAction() {
     // 查询条件的封装
     const map = {};
-    // 企业名称
-    map['companyName'] = ['LIKE', '%' + queryValue + '%'];
-    // 负责人名称
-    map['directorName'] = ['LIKE', '%' + queryValue + '%'];
-    // 或查询
+    // 与查询
     map['_logic'] = 'and';
     // 交易流水号
     const number = this.post('number');
