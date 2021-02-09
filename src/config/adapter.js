@@ -62,7 +62,7 @@ exports.model = {
     options: {
       // 身份验证相关
       // replicaSet: 'mgset-3074013',
-      // authSource: 'admin'
+      authSource: 'admin'
     }
   }
 };
