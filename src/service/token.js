@@ -2,8 +2,8 @@ const jwt = require('jsonwebtoken');
 const secret = '&w@ueJnXy!Gj0J@qVmMPR^9ip00EP0^Qy5Se#lzwStExJ3Zw4j02NVLm^btjBO8x';
 
 module.exports = class extends think.Service {
-  create(userId) { // 创建令牌
-    return jwt.sign(userId, secret, { expiresIn: 60 * 60 });
+  create(userInfo) { // 创建令牌
+    return jwt.sign(userInfo, secret, { expiresIn: '2h' });
   }
 
   parse() { // 令牌验签
@@ -12,7 +12,7 @@ module.exports = class extends think.Service {
     }
 
     try {
-      return jwt.verify(think.token, secret).id;
+      return jwt.verify(think.token, secret);
     } catch (e) {
       think.logger.error(e);
       return null;

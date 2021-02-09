@@ -28,19 +28,19 @@ module.exports = class extends Base {
         return this.fail('Incorrect username or password', res);
       }
 
-      // 实例化一个tokenservice对象，来调用create()方法创建一个token
-      const TokenService = this.service('token');
-      const token = await TokenService.create(res.account);
-      // 判断token是否创建成功
-      if (think.isEmpty(token)) {
-        return this.fail('failed to create token');
-      }
-
       // 令牌创建成功，返回给客户端"userInfo"和"token"给前端
       const userInfo = {
         account: res.account,
         name: res.name
       };
+
+      // 实例化一个tokenservice对象，来调用create()方法创建一个token
+      const TokenService = this.service('token');
+      const token = await TokenService.create(userInfo);
+      // 判断token是否创建成功
+      if (think.isEmpty(token)) {
+        return this.fail('failed to create token');
+      }
 
       return this.success({
         token: token,
