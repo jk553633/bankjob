@@ -6,7 +6,7 @@ module.exports = class extends think.Service {
     return jwt.sign(userId, secret);
   }
 
-  async parse() { // 令牌验签
+  parse() { // 令牌验签
     if (think.isEmpty(think.token)) { // 如果token为空
       return null;
     }
