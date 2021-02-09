@@ -15,7 +15,7 @@ module.exports = class extends Base {
     // 币种
     flowsInfo['currencyType'] = this.post('currencyType');
     // 交易金额（包含"+"、"-"）
-    flowsInfo['transitionAmount'] = this.post('transitionAmount');
+    flowsInfo['transitionAmount'] = Number(this.post('transitionAmount'));
     // 存折号（卡号）
     flowsInfo['passbookNumber'] = this.post('passbookNumber');
 

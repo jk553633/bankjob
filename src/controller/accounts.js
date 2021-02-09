@@ -53,7 +53,7 @@ module.exports = class extends Base {
     // 币种
     flowsInfo['currencyType'] = accountsInfo['currencyType'];
     // 交易金额（包含"+"、"-"）
-    flowsInfo['transitionAmount'] = accountsInfo['openAmount'];
+    flowsInfo['transitionAmount'] = Number(accountsInfo['openAmount']);
     // 存折号（卡号）
     flowsInfo['passbookNumber'] = accountsInfo['passbookNumber'];
     // 创建者

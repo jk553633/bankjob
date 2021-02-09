@@ -11,48 +11,48 @@ module.exports = class extends Base {
    */
   async getHandlesByParamsAction() {
     // 查询条件的封装
-    const map = {};
-    // 与查询
-    map['_logic'] = 'and';
+    const arr = [];
     // 交易流水号
     const number = this.get('number');
     if (typeof (number) !== 'undefined') {
-      map['number'] = number;
+      arr.push({'number': number});
     }
     // 柜员 _id
     const tellersId = this.get('tellersId');
     if (typeof (tellersId) !== 'undefined') {
-      map['tellersId'] = tellersId;
+      arr.push({'insertUser': tellersId});
     }
     // 最小金额
     const minAmount = this.get('minAmount');
     if (typeof (minAmount) !== 'undefined') {
-      map['minAmount'] = ['>=', minAmount];
+      arr.push({'transitionAmount': { $gte: Number(minAmount) }});
     }
     // 最大金额
     const maxAmount = this.get('maxAmount');
     if (typeof (maxAmount) !== 'undefined') {
-      map['maxAmount'] = ['<=', maxAmount];
+      arr.push({'transitionAmount': { $lte: Number(maxAmount) }});
     }
     // 交易起始日期
     const startDate = this.get('startDate');
     if (typeof (startDate) !== 'undefined') {
-      map['startDate'] = ['>=', startDate];
+      arr.push({'insertDateTime': { $gte: new Date(new Date(startDate).setHours(0, 0, 0, 0)).getTime() }});
     }
     // 交易结束日期
     const endDate = this.get('endDate');
     if (typeof (endDate) !== 'undefined') {
-      map['endDate'] = ['<=', endDate];
+      arr.push({'insertDateTime': { $lt: new Date(new Date(endDate).setHours(0, 0, 0, 0)).getTime() + 24 * 60 * 60 * 1000 }});
     }
     // 当前页
     const currentPage = this.get('currentPage');
     // 每页显示条数
     const pageSize = this.get('pageSize');
 
+    const where = think.isEmpty(arr) ? arr : {$and: arr};
+
     try {
       const flows = this.mongo('flows');
       // 获取交易流水信息
-      const list = await flows.where(map).page(currentPage, pageSize).select();
+      const list = await flows.where(where).page(currentPage, pageSize).select();
       return this.success(list, 'get flows success');
     } catch (e) {
       think.logger.error(e);
