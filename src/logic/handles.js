@@ -5,6 +5,18 @@ module.exports = class extends think.Logic {
   getHandlesByParamsAction() {
     this.allowMethods = 'get'; //  只允许 GET 请求类型
     const rules = {
+      minAmount: {
+        currency: true
+      },
+      maxAmount: {
+        currency: true
+      },
+      startDate: {
+        date: true
+      },
+      endDate: {
+        date: true
+      },
       currentPage: {
         required: true,
         int: true // 需要是 int 型

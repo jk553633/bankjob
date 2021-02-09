@@ -37,6 +37,17 @@ module.exports = class extends Base {
     // 关联柜员_id
     accountsInfo['tellersId'] = this.post('tellersId');
 
+    const now = Date.now();
+
+    // 创建者
+    accountsInfo['insertUser'] = 'admin';
+    // 创建时间
+    accountsInfo['insertDateTime'] = now;
+    // 更新者
+    accountsInfo['updateUser'] = 'admin';
+    // 更新时间
+    accountsInfo['updateDateTime'] = now;
+
     // 取得信息
     const flowsInfo = {};
     // 币种
@@ -45,6 +56,14 @@ module.exports = class extends Base {
     flowsInfo['transitionAmount'] = accountsInfo['openAmount'];
     // 存折号（卡号）
     flowsInfo['passbookNumber'] = accountsInfo['passbookNumber'];
+    // 创建者
+    flowsInfo['insertUser'] = 'admin';
+    // 创建时间
+    flowsInfo['insertDateTime'] = now;
+    // 更新者
+    flowsInfo['updateUser'] = 'admin';
+    // 更新时间
+    flowsInfo['updateDateTime'] = now;
 
     try {
       const accounts = this.mongo('accounts');

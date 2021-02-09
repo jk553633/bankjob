@@ -59,6 +59,17 @@ module.exports = class extends Base {
     // 关联柜员_id
     companiesInfo['tellersId'] = this.post('tellersId');
 
+    const now = Date.now();
+
+    // 创建者
+    companiesInfo['insertUser'] = 'admin';
+    // 创建时间
+    companiesInfo['insertDateTime'] = now;
+    // 更新者
+    companiesInfo['updateUser'] = 'admin';
+    // 更新时间
+    companiesInfo['updateDateTime'] = now;
+
     try {
       const companies = this.mongo('companies');
       // 检查企业客户是否已存在
@@ -104,10 +115,13 @@ module.exports = class extends Base {
     // 查询数据
     const queryValue = this.post('queryValue');
     // 查询条件的封装
-    const map = [];
+    const map = {};
+    // 企业名称
     map['companyName'] = ['LIKE', '%' + queryValue + '%'];
+    // 负责人名称
     map['directorName'] = ['LIKE', '%' + queryValue + '%'];
-    map['_logic'] = 'or'; // 或查询
+    // 或查询
+    map['_logic'] = 'or';
 
     try {
       const companies = this.mongo('companies');
