@@ -8,70 +8,7 @@ module.exports = class extends think.Logic {
       companyName: {
         required: true
       },
-      abbreviation: {
-        required: true
-      },
-      companyCertificateType: {
-        required: true
-      },
-      companyErtificateNumber: {
-        required: true
-      },
-      longTerm: {
-        required: true
-      },
-      expireTime: {
-        required: true
-      },
-      telephone: {
-        required: true
-      },
-      registerType: {
-        required: true
-      },
-      registerDate: {
-        required: true
-      },
-      registerCurrencyType: {
-        required: true
-      },
-      regiseterCapital: {
-        required: true
-      },
-      organization: {
-        required: true
-      },
-      organizationAddress: {
-        required: true
-      },
-      nationalTaxNumber: {
-        required: true
-      },
-      LocalTaxNumber: {
-        required: true
-      },
-      registerNumber: {
-        required: true
-      },
-      creditCode: {
-        required: true
-      },
       directorName: {
-        required: true
-      },
-      directorType: {
-        required: true
-      },
-      directorCertificateType: {
-        required: true
-      },
-      directorErtificateNumber: {
-        required: true
-      },
-      phone: {
-        required: true
-      },
-      tellersId: {
         required: true
       }
     };
