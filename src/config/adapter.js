@@ -61,7 +61,6 @@ exports.model = {
     database: 'bankjob', // 数据库名称
     options: {
       // 身份验证相关
-      // replicaSet: 'mgset-3074013',
       authSource: 'admin'
     }
   }
