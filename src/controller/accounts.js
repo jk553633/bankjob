@@ -37,13 +37,15 @@ module.exports = class extends Base {
     try {
       const accounts = this.mongo('accounts');
       // 检查管理员是否已存在
-      const res = await accounts.where({admin_name: accountsInfo['passbookNumber']}).find();
+      // const res = await accounts.where({admin_name: accountsInfo['passbookNumber']}).find();
+      const res = await accounts.select();
       if (JSON.stringify(res) !== '{}') {
         return this.fail('The passbookNumber has been registered', res);
       }
       const adminId = await accounts.add(accountsInfo);
       return this.success(adminId, 'add accounts success');
     } catch (e) {
+      think.logger.error(e);
       return this.fail('failed to add accounts', accountsInfo);
     }
   }
