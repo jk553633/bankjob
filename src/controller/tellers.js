@@ -13,32 +13,33 @@ module.exports = class extends Base {
     // 查询条件的封装
     const map = {};
     // 与查询
-    map['_logic'] = 'and';
+    // map['_logic'] = 'and';
     // 账号
-    map['account'] = this.post('account');
-    // 密码
-    map['password'] = think.md5(this.post('password'));
+    map['account'] = ['=', this.post('account')];
+    // // 密码
+    // map['password'] = ['=', think.md5(this.post('password'))];
 
     try {
       const tellers = this.mongo('tellers');
       // 检查账户是否已存在
-      const res = await tellers.where(map).find();
+      // const res = await tellers.where(map).find();
+      const res = await tellers.where({account: this.post('account')}).find();
       if (JSON.stringify(res) === '{}') {
         return this.fail('Incorrect username or password', res);
       }
 
       // 实例化一个tokenservice对象，来调用create()方法创建一个token
       const TokenService = this.service('token');
-      const token = await TokenService.create(res._id);
+      const token = await TokenService.create(res.account);
       // 判断token是否创建成功
       if (think.isEmpty(token)) {
         return this.fail('failed to create token');
       }
 
-      // 令牌创建成功，返回给客户端"uerInfo"和"token"给前端
+      // 令牌创建成功，返回给客户端"userInfo"和"token"给前端
       const userInfo = {
-        id: res._id,
-        username: res.account
+        account: res.account,
+        name: res.name
       };
 
       return this.success({
