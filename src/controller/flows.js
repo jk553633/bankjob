@@ -57,4 +57,27 @@ module.exports = class extends Base {
       return this.fail('failed to get flows');
     }
   }
+
+  /**
+   * 根据卡号获取某一个客户的交易流水
+   * @returns {Promise<any|void>}
+   */
+  async getFlowsByPassbookAction() {
+    // 存折号（卡号）
+    const passbookNumber = this.post('passbookNumber');
+    // 当前页
+    const currentPage = this.post('currentPage');
+    // 每页显示条数
+    const pageSize = this.post('pageSize');
+
+    try {
+      const flows = this.mongo('flows');
+      // 获取交易流水信息
+      const list = await flows.where({passbookNumber: passbookNumber}).page(currentPage, pageSize).select();
+      return this.success(list, 'get flows success');
+    } catch (e) {
+      think.logger.error(e);
+      return this.fail('failed to get flows');
+    }
+  }
 };
