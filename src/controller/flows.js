@@ -6,7 +6,7 @@ module.exports = class extends Base {
   }
 
   /**
-   * 开户（新增个人客户开户信息）
+   * 新增交易流水记录（存取款操作）
    * @returns {Promise<any|void>}
    */
   async addFlowsAction() {
@@ -22,7 +22,7 @@ module.exports = class extends Base {
     try {
       const accounts = this.mongo('accounts');
       // 检查账户是否已存在
-      const res = await accounts.where({passbookNumber: accountsInfo['passbookNumber']}).find();
+      const res = await accounts.where({passbookNumber: flowsInfo['passbookNumber']}).find();
       if (JSON.stringify(res) === '{}') {
         return this.fail('The accounts not existed', res);
       }
@@ -34,6 +34,27 @@ module.exports = class extends Base {
     } catch (e) {
       think.logger.error(e);
       return this.fail('failed to add flows', flowsInfo);
+    }
+  }
+
+  /**
+   * 获取所有个人客户的交易流水
+   * @returns {Promise<any|void>}
+   */
+  async getFlowsAction() {
+    // 当前页
+    const currentPage = this.post('currentPage');
+    // 每页显示条数
+    const pageSize = this.post('pageSize');
+
+    try {
+      const flows = this.mongo('flows');
+      // 获取交易流水信息
+      const list = await flows.page(currentPage, pageSize).select();
+      return this.success(list, 'get flows success');
+    } catch (e) {
+      think.logger.error(e);
+      return this.fail('failed to get flows');
     }
   }
 };
