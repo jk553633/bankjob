@@ -33,7 +33,6 @@ module.exports = class extends Base {
     // 关联柜员_id
     accountsInfo['tellersId'] = this.post('tellersId');
 
-    // 添加
     try {
       const accounts = this.mongo('accounts');
       // 检查管理员是否已存在
@@ -41,7 +40,9 @@ module.exports = class extends Base {
       if (JSON.stringify(res) !== '{}') {
         return this.fail('The passbookNumber has been registered', res);
       }
+      // 开户
       const accountsId = await accounts.add(accountsInfo);
+      // 开户成功后，会同时在 flows 表中新增一条交易流水信息
       return this.success(accountsId, 'add accounts success');
     } catch (e) {
       think.logger.error(e);
