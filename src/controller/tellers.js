@@ -11,18 +11,16 @@ module.exports = class extends Base {
    */
   async loginAction() {
     // 查询条件的封装
-    const map = {};
-    // 与查询
-    // map['_logic'] = 'and';
+    const arr = [];
     // 账号
-    map['account'] = this.post('account');
+    arr.push({'account': this.post('account')});
     // 密码
-    map['password'] = think.md5(this.post('password'));
+    arr.push({'password': think.md5(this.post('password'))});
 
     try {
       const tellers = this.mongo('tellers');
       // 检查账户是否已存在
-      const res = await tellers.where(map).find();
+      const res = await tellers.where({ $and: arr }).find();
       if (JSON.stringify(res) === '{}') {
         return this.fail('Incorrect username or password', res);
       }
