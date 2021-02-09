@@ -17,7 +17,7 @@ module.exports = class extends Base {
     // 账号
     map['account'] = this.post('account');
     // 密码
-    map['password'] = global.md5(this.post('password'));
+    map['password'] = think.md5(this.post('password'));
 
     try {
       const tellers = this.mongo('tellers');
@@ -41,27 +41,27 @@ module.exports = class extends Base {
     // 取得信息
     const tellersInfo = {};
     // 账号
-    tellersInfo['account'] = this.post('currencyType');
+    tellersInfo['account'] = this.post('account');
     // 柜员名字
     tellersInfo['name'] = this.post('name');
     // 密码
-    tellersInfo['password'] = global.md5(this.post('password'));
+    tellersInfo['password'] = think.md5(this.post('password'));
 
     const now = Date.now();
 
     // 创建者
-    tellersInfo['insertUser'] = 'admin';
+    tellersInfo['insertUser'] = tellersInfo['name'];
     // 创建时间
     tellersInfo['insertDateTime'] = now;
     // 更新者
-    tellersInfo['updateUser'] = 'admin';
+    tellersInfo['updateUser'] = tellersInfo['name'];
     // 更新时间
     tellersInfo['updateDateTime'] = now;
 
     try {
       const tellers = this.mongo('tellers');
       // 检查柜员是否已存在
-      const res = await tellers.where({passbookNumber: tellersInfo['passbookNumber']}).find();
+      const res = await tellers.where({account: tellersInfo['account']}).find();
       if (JSON.stringify(res) !== '{}') {
         return this.fail('The tellers has existed', res);
       }
