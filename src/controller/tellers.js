@@ -66,8 +66,8 @@ module.exports = class extends Base {
         return this.fail('The tellers has existed', res);
       }
       // 新增柜员信息
-      const tellerId = await tellers.add(tellersInfo);
-      return this.success(tellerId, 'register success');
+      const tellersId = await tellers.add(tellersInfo);
+      return this.success(tellersId, 'register success');
     } catch (e) {
       think.logger.error(e);
       return this.fail('failed to register', tellersInfo);

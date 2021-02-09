@@ -2,6 +2,7 @@ module.exports = class extends think.Logic {
   indexAction() {
 
   }
+
   addFlowsAction() {
     this.allowMethods = 'post'; //  只允许 POST 请求类型
     const rules = {
@@ -21,6 +22,7 @@ module.exports = class extends think.Logic {
       return this.fail('validate error', this.validateErrors);
     }
   }
+
   getFlowsAction() {
     this.allowMethods = 'get'; //  只允许 GET 请求类型
     const rules = {
@@ -38,6 +40,7 @@ module.exports = class extends think.Logic {
       return this.fail('validate error', this.validateErrors);
     }
   }
+
   getFlowsByPassbookAction() {
     this.allowMethods = 'get'; //  只允许 GET 请求类型
     const rules = {
