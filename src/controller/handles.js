@@ -15,39 +15,39 @@ module.exports = class extends Base {
     // 与查询
     map['_logic'] = 'and';
     // 交易流水号
-    const number = this.post('number');
+    const number = this.get('number');
     if (typeof (number) !== 'undefined') {
       map['number'] = number;
     }
     // 柜员 _id
-    const tellersId = this.post('tellersId');
+    const tellersId = this.get('tellersId');
     if (typeof (tellersId) !== 'undefined') {
       map['tellersId'] = tellersId;
     }
     // 最小金额
-    const minAmount = this.post('minAmount');
+    const minAmount = this.get('minAmount');
     if (typeof (minAmount) !== 'undefined') {
       map['minAmount'] = ['>=', minAmount];
     }
     // 最大金额
-    const maxAmount = this.post('maxAmount');
+    const maxAmount = this.get('maxAmount');
     if (typeof (maxAmount) !== 'undefined') {
       map['maxAmount'] = ['<=', maxAmount];
     }
     // 交易起始日期
-    const startDate = this.post('startDate');
+    const startDate = this.get('startDate');
     if (typeof (startDate) !== 'undefined') {
       map['startDate'] = ['>=', startDate];
     }
     // 交易结束日期
-    const endDate = this.post('endDate');
+    const endDate = this.get('endDate');
     if (typeof (endDate) !== 'undefined') {
       map['endDate'] = ['<=', endDate];
     }
     // 当前页
-    const currentPage = this.post('currentPage');
+    const currentPage = this.get('currentPage');
     // 每页显示条数
-    const pageSize = this.post('pageSize');
+    const pageSize = this.get('pageSize');
 
     try {
       const flows = this.mongo('flows');
@@ -66,9 +66,9 @@ module.exports = class extends Base {
    */
   async getHandlesAction() {
     // 当前页
-    const currentPage = this.post('currentPage');
+    const currentPage = this.get('currentPage');
     // 每页显示条数
-    const pageSize = this.post('pageSize');
+    const pageSize = this.get('pageSize');
 
     try {
       const flows = this.mongo('flows');

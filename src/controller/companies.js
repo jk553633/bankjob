@@ -92,9 +92,9 @@ module.exports = class extends Base {
    */
   async getCompaniesAction() {
     // 当前页
-    const currentPage = this.post('currentPage');
+    const currentPage = this.get('currentPage');
     // 每页显示条数
-    const pageSize = this.post('pageSize');
+    const pageSize = this.get('pageSize');
 
     try {
       const companies = this.mongo('companies');
@@ -114,20 +114,12 @@ module.exports = class extends Base {
   async queryCompaniesAction() {
     // 查询数据
     const queryValue = this.post('queryValue');
-    // 查询条件的封装
-    const map = {};
-    // 或查询
-    map['_logic'] = 'or';
-    // 企业名称
-    map['companyName'] = ['LIKE', '%' + queryValue + '%'];
-    // 负责人名称
-    map['directorName'] = ['LIKE', '%' + queryValue + '%'];
 
     try {
       const companies = this.mongo('companies');
       // 获取企业客户信息
       // 只能输入企业名称或负责人名称查询
-      const list = await companies.where(map).select();
+      const list = await companies.where({'companyName|directorName': ['like', '%' + queryValue + '%']}).select();
       return this.success(list, 'get companies success');
     } catch (e) {
       think.logger.error(e);

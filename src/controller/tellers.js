@@ -10,20 +10,15 @@ module.exports = class extends Base {
    * @returns {Promise<any|void>}
    */
   async loginAction() {
-    // 查询条件的封装
-    const map = {};
-    // 与查询
-    // map['_logic'] = 'and';
     // 账号
-    map['account'] = ['=', this.post('account')];
-    // // 密码
-    // map['password'] = ['=', think.md5(this.post('password'))];
+    const account = this.post('account');
+    // 密码
+    const password = think.md5(this.post('password'));
 
     try {
       const tellers = this.mongo('tellers');
       // 检查账户是否已存在
-      // const res = await tellers.where(map).find();
-      const res = await tellers.where({account: this.post('account')}).find();
+      const res = await tellers.where('account = ' + account + ' AND password = ' + password).find();
       if (JSON.stringify(res) === '{}') {
         return this.fail('Incorrect username or password', res);
       }
