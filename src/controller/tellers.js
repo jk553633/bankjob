@@ -26,7 +26,25 @@ module.exports = class extends Base {
       if (JSON.stringify(res) === '{}') {
         return this.fail('Incorrect username or password', res);
       }
-      return this.success(res, 'login success');
+
+      // 实例化一个tokenservice对象，来调用create()方法创建一个token
+      const TokenService = this.service('token');
+      const token = await TokenService.create(res._id);
+      // 判断token是否创建成功
+      if (think.isEmpty(token)) {
+        return this.fail('failed to create token');
+      }
+
+      // 令牌创建成功，返回给客户端"uerInfo"和"token"给前端
+      const userInfo = {
+        id: res._id,
+        username: res.account
+      };
+
+      return this.success({
+        token: token,
+        userInfo: userInfo
+      }, 'login success');
     } catch (e) {
       think.logger.error(e);
       return this.fail('failed to login');
