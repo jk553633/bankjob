@@ -40,11 +40,11 @@ module.exports = class extends Base {
     const now = Date.now();
 
     // 创建者
-    accountsInfo['insertUser'] = 'admin';
+    accountsInfo['insertUser'] = think.userInfo.account;
     // 创建时间
     accountsInfo['insertDateTime'] = now;
     // 更新者
-    accountsInfo['updateUser'] = 'admin';
+    accountsInfo['updateUser'] = think.userInfo.account;
     // 更新时间
     accountsInfo['updateDateTime'] = now;
 
@@ -57,11 +57,11 @@ module.exports = class extends Base {
     // 存折号（卡号）
     flowsInfo['passbookNumber'] = accountsInfo['passbookNumber'];
     // 创建者
-    flowsInfo['insertUser'] = 'admin';
+    flowsInfo['insertUser'] = think.userInfo.account;
     // 创建时间
     flowsInfo['insertDateTime'] = now;
     // 更新者
-    flowsInfo['updateUser'] = 'admin';
+    flowsInfo['updateUser'] = think.userInfo.account;
     // 更新时间
     flowsInfo['updateDateTime'] = now;
 

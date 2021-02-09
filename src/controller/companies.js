@@ -62,11 +62,11 @@ module.exports = class extends Base {
     const now = Date.now();
 
     // 创建者
-    companiesInfo['insertUser'] = 'admin';
+    companiesInfo['insertUser'] = think.userInfo.account;
     // 创建时间
     companiesInfo['insertDateTime'] = now;
     // 更新者
-    companiesInfo['updateUser'] = 'admin';
+    companiesInfo['updateUser'] = think.userInfo.account;
     // 更新时间
     companiesInfo['updateDateTime'] = now;
 
