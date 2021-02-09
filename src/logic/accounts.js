@@ -7,6 +7,10 @@ module.exports = class extends think.Logic {
     const rules = {
       passbookNumber: {
         required: true
+      },
+      openAmount: {
+        currency: true,
+        required: true
       }
     };
     const flag = this.validate(rules);

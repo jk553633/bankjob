@@ -9,6 +9,7 @@ module.exports = class extends think.Logic {
         required: true
       },
       transitionAmount: {
+        currency: true,
         required: true
       },
       passbookNumber: {
