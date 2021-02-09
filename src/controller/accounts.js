@@ -53,7 +53,7 @@ module.exports = class extends Base {
       if (JSON.stringify(res) !== '{}') {
         return this.fail('The accounts has existed', res);
       }
-      // 新增账户
+      // 新增账户信息
       const accountsId = await accounts.add(accountsInfo);
 
       const flows = this.mongo('flows');
