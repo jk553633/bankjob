@@ -114,12 +114,19 @@ module.exports = class extends Base {
   async queryCompaniesAction() {
     // 查询数据
     const queryValue = this.post('queryValue');
+    const reg = new RegExp('.*' + queryValue + '.*', 'g');
+    // 查询条件的封装
+    const arr = [];
+    // 账号
+    arr.push({'companyName': {$regex: reg}});
+    // 密码
+    arr.push({'directorName': {$regex: reg}});
 
     try {
       const companies = this.mongo('companies');
       // 获取企业客户信息
       // 只能输入企业名称或负责人名称查询
-      const list = await companies.where({'companyName|directorName': ['like', '%' + queryValue + '%']}).select();
+      const list = await companies.where({ $or: arr }).select();
       return this.success(list, 'get companies success');
     } catch (e) {
       think.logger.error(e);
