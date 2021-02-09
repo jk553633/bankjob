@@ -35,7 +35,7 @@ module.exports = class extends Base {
 
     // 添加
     try {
-      const accounts = this.model('accounts');
+      const accounts = this.mongo('accounts');
       // 检查管理员是否已存在
       const res = await accounts.where({admin_name: accountsInfo['passbookNumber']}).find();
       if (JSON.stringify(res) !== '{}') {

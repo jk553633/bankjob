@@ -1,7 +1,7 @@
 const fileCache = require('think-cache-file');
 const nunjucks = require('think-view-nunjucks');
 const fileSession = require('think-session-file');
-const mysql = require('think-model-mysql');
+// const mysql = require('think-model-mysql');
 const {Console, File, DateFile} = require('think-logger3');
 const path = require('path');
 const isDev = think.env === 'development';
@@ -28,22 +28,42 @@ exports.cache = {
  * @type {Object}
  */
 exports.model = {
-  type: 'mysql',
-  common: {
+  // type: 'mysql',
+  // common: {
+  //   logConnect: isDev,
+  //   logSql: isDev,
+  //   logger: msg => think.logger.info(msg)
+  // },
+  // mysql: {
+  //   handle: mysql,
+  //   database: '',
+  //   prefix: 'think_',
+  //   encoding: 'utf8',
+  //   host: '127.0.0.1',
+  //   port: '',
+  //   user: 'root',
+  //   password: 'root',
+  //   dateStrings: true
+  // }
+  type: 'mongo', // 默认使用的类型，调用时可以指定参数切换
+  common: { // 通用配置
     logConnect: isDev,
     logSql: isDev,
-    logger: msg => think.logger.info(msg)
+    logger: msg => think.logger.info(msg) // 打印信息的 logger
   },
-  mysql: {
-    handle: mysql,
-    database: '',
-    prefix: 'think_',
-    encoding: 'utf8',
-    host: '127.0.0.1',
-    port: '',
-    user: 'root',
-    password: 'root',
-    dateStrings: true
+  mongo: {
+    // host: '127.0.0.1',
+    // port: 27017,
+    host: 'server.natappfree.cc',
+    port: 38886,
+    user: 'admin',
+    password: 'password',
+    database: 'bankjob', // 数据库名称
+    options: {
+      // 身份验证相关
+      // replicaSet: 'mgset-3074013',
+      // authSource: 'admin'
+    }
   }
 };
 
