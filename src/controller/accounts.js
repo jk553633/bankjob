@@ -5,6 +5,10 @@ module.exports = class extends Base {
     return this.display();
   }
 
+  /**
+   * 开户（新增个人客户开户信息）
+   * @returns {Promise<any|void>}
+   */
   async addAccountsAction() {
     // 取得信息
     const accountsInfo = {};
@@ -33,16 +37,28 @@ module.exports = class extends Base {
     // 关联柜员_id
     accountsInfo['tellersId'] = this.post('tellersId');
 
+    // 取得信息
+    const flowsInfo = {};
+    // 币种
+    flowsInfo['currencyType'] = accountsInfo['currencyType'];
+    // 交易金额（包含"+"、"-"）
+    flowsInfo['transitionAmount'] = accountsInfo['openAmount'];
+    // 存折号（卡号）
+    flowsInfo['passbookNumber'] = accountsInfo['passbookNumber'];
+
     try {
       const accounts = this.mongo('accounts');
-      // 检查管理员是否已存在
+      // 检查账户是否已存在
       const res = await accounts.where({passbookNumber: accountsInfo['passbookNumber']}).find();
       if (JSON.stringify(res) !== '{}') {
-        return this.fail('The passbookNumber has been registered', res);
+        return this.fail('The accounts has existed', res);
       }
-      // 开户
+      // 新增账户
       const accountsId = await accounts.add(accountsInfo);
-      // 开户成功后，会同时在 flows 表中新增一条交易流水信息
+
+      const flows = this.mongo('flows');
+      // 新增交易流水信息
+      await flows.add(flowsInfo);
       return this.success(accountsId, 'add accounts success');
     } catch (e) {
       think.logger.error(e);
