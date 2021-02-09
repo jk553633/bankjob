@@ -52,10 +52,10 @@ exports.model = {
     logger: msg => think.logger.info(msg) // 打印信息的 logger
   },
   mongo: {
-    // host: '127.0.0.1',
-    // port: 27017,
-    host: 'server.natappfree.cc',
-    port: 38886,
+    host: '127.0.0.1',
+    port: 27017,
+    // host: 'server.natappfree.cc',
+    // port: 38886,
     user: 'admin',
     password: 'password',
     database: 'bankjob', // 数据库名称
