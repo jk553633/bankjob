@@ -1,17 +1,5 @@
 module.exports = class extends think.Controller {
   __before() {
-    // 配置跨域
-    this.header('Access-Control-Allow-Origin', this.header('origin') || '*');
-
-    // 允许请求头参数进入
-    this.header('Access-Control-Allow-Headers', '*');
-
-    // 处理预请求，给body设置一个值，否则会包404
-    if (this.method === 'OPTIONS') {
-      this.ctx.body = 200;
-      return false;
-    }
-
     // 访问的API
     const url = this.ctx.request.url;
     // 不受保护的API
