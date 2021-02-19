@@ -84,4 +84,25 @@ module.exports = class extends Base {
       return this.fail('failed to add accounts', accountsInfo);
     }
   }
+
+  /**
+   * 获取所有个人客户开户信息
+   * @returns {Promise<any|void>}
+   */
+  async getAccountsAction() {
+    // 当前页
+    const currentPage = this.get('currentPage');
+    // 每页显示条数
+    const pageSize = this.get('pageSize');
+
+    try {
+      const accounts = this.mongo('accounts');
+      // 获取交易流水信息
+      const list = await accounts.page(currentPage, pageSize).select();
+      return this.success(list, 'get accounts success');
+    } catch (e) {
+      think.logger.error(e);
+      return this.fail('failed to get accounts');
+    }
+  }
 };

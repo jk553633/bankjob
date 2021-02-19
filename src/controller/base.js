@@ -1,5 +1,8 @@
 module.exports = class extends think.Controller {
   __before() {
+    // eslint-disable-next-line no-constant-condition
+    // if (true) return;
+
     // 访问的API
     const url = this.ctx.request.url;
     // 不受保护的API
