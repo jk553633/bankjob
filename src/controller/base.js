@@ -23,4 +23,17 @@ module.exports = class extends think.Controller {
 
     return this.fail('Please login in first');
   }
+
+  getNumber() {
+    var time = new Date();
+    var year = time.getFullYear();
+    var month = time.getMonth() + 1;
+    var date = time.getDate();
+    var hours = time.getHours();
+    var minutes = time.getMinutes();
+    var seconds = time.getSeconds();
+    return year + this.add0(month) + this.add0(date) + this.add0(hours) + this.add0(minutes) + this.add0(seconds);
+  }
+
+  add0(m) { return m < 10 ? '0' + m : m }
 };

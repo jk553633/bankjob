@@ -50,6 +50,8 @@ module.exports = class extends Base {
 
     // 取得信息
     const flowsInfo = {};
+    // 交易流水号
+    flowsInfo['number'] = this.getNumber();
     // 币种
     flowsInfo['currencyType'] = accountsInfo['currencyType'];
     // 交易金额（包含"+"、"-"）

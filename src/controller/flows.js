@@ -12,6 +12,8 @@ module.exports = class extends Base {
   async addFlowsAction() {
     // 取得信息
     const flowsInfo = {};
+    // 交易流水号
+    flowsInfo['number'] = this.getNumber();
     // 币种
     flowsInfo['currencyType'] = this.post('currencyType');
     // 交易金额（包含"+"、"-"）
