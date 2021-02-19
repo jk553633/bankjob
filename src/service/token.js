@@ -6,13 +6,13 @@ module.exports = class extends think.Service {
     return jwt.sign(userInfo, secret, { expiresIn: '2h' });
   }
 
-  parse() { // 令牌验签
-    if (think.isEmpty(think.token)) { // 如果token为空
+  parse(token) { // 令牌验签
+    if (think.isEmpty(token)) { // 如果token为空
       return null;
     }
 
     try {
-      return jwt.verify(think.token, secret);
+      return jwt.verify(token, secret);
     } catch (e) {
       think.logger.error(e);
       return null;

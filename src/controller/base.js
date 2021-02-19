@@ -12,10 +12,10 @@ module.exports = class extends think.Controller {
       return;
     }
     // 从客户端请求头header中获取发送过来的token,如果没有获取到给think.token赋空值
-    think.token = this.ctx.header.token || '';
+    const token = this.ctx.header.token || '';
     // 声明一个Token实例来调用token.js里的parse()方法来对token进行验签,通过则返回用户ID，失败返回null
-    const Token = this.service('token');
-    think.userInfo = Token.parse();
+    const tokenService = this.service('token');
+    think.userInfo = tokenService.parse(token);
     if (!think.isNullOrUndefined(think.userInfo)) { // 如果用户ID为空
       return;
     }
