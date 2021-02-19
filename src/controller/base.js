@@ -24,6 +24,10 @@ module.exports = class extends think.Controller {
     return this.fail('Please login in first');
   }
 
+  /**
+   * 交易流水号取得
+   * @returns {Promise<any|void>}
+   */
   getNumber() {
     var time = new Date();
     var year = time.getFullYear();
@@ -35,5 +39,9 @@ module.exports = class extends think.Controller {
     return year + this.add0(month) + this.add0(date) + this.add0(hours) + this.add0(minutes) + this.add0(seconds);
   }
 
+  /**
+   * 左补零
+   * @returns {Promise<any|void>}
+   */
   add0(m) { return m < 10 ? '0' + m : m }
 };
